@@ -8,12 +8,12 @@ namespace Assets.Game.Scripts.Abstract
     {
         protected Transform bulletPoint;
         protected float fireTimer;
-        protected int ammoCount = 1;
+        protected byte ammoCount = 1;
         protected float fireRate = 1.5f;
 
         public abstract ModuleType ModuleType { get; }
 
-        public void Initialize(Transform bulletPoint)
+        public virtual void Initialize(Transform bulletPoint)
         {
             UpgradeSignals.Instance.onUpgradeApplied += OnUpgradeReceived;
             this.bulletPoint = bulletPoint;

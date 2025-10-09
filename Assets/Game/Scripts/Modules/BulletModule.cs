@@ -1,6 +1,8 @@
 ﻿using Assets.Game.Scripts.Abstract;
 using Assets.Game.Scripts.Datas;
-using Assets.Game.Scripts.Signals;
+using Assets.Game.Scripts.Modules.BulletStates;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Modules
@@ -11,10 +13,14 @@ namespace Assets.Game.Scripts.Modules
 
         public override ModuleType ModuleType => ModuleType.Bullet;
 
+        private AbsBulletState currentBulletState;
+        SingleBulletState singleBulletState;
+        DoubleBulletState doubleBulletState;
+
+        Dictionary<byte, AbsBulletState> bulletStates;
+
         public override void Tick()
         {
-            Debug.Log("Firing");
-
             fireTimer += Time.deltaTime;
 
             if (fireTimer >= 1f / fireRate)
@@ -26,9 +32,7 @@ namespace Assets.Game.Scripts.Modules
 
         protected override void Fire()
         {
-            GameObject bullet = PoolSignals.Instance.onGetItemFromPool?.Invoke(ItemType.Bullet);
-            bullet.transform.position = bulletPoint.position;
-            bullet.GetComponent<AbsAmmunition>().Launch();
+            currentBulletState?.Tick();
         }
 
         protected override void ApplyUpgrade(UpgradeData data)
@@ -39,12 +43,40 @@ namespace Assets.Game.Scripts.Modules
                     fireRate *= data.Multiplier;
                     break;
                 case UpgradeType.ExtraAmmo:
-                    ammoCount += Mathf.RoundToInt(data.Value);
+                    ammoCount += (byte)Mathf.RoundToInt(data.Value);
+                    UpgradeBulletState(ammoCount);
                     break;
                 case UpgradeType.Piercing:
                     piercing = true;
                     break;
             }
+        }
+
+        public override void Initialize(Transform bulletPoint)
+        {
+            base.Initialize(bulletPoint);
+
+            singleBulletState = new SingleBulletState(bulletPoint);
+            doubleBulletState = new DoubleBulletState(bulletPoint);
+
+            bulletStates = new()
+            {
+                {1, singleBulletState},
+                {2, doubleBulletState},
+            };
+
+            currentBulletState = singleBulletState;
+        }
+
+        public void UpgradeBulletState(byte bulletCount)
+        {
+            AbsBulletState selectedState = bulletStates.FirstOrDefault(x => x.Key == bulletCount).Value;
+            if (selectedState == null)
+            {
+                Debug.Log("Failed to switch next bullet state");
+                return;
+            }
+            currentBulletState = selectedState;
         }
     }
 }

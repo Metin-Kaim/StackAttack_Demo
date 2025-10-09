@@ -45,6 +45,10 @@ namespace Assets.Game.Scripts.Controllers
                     multiplier: 1.2f
                 ));
             }
+            if (Input.GetKeyDown(KeyCode.Y))
+            {
+                UpgradeSignals.Instance.onUpgradeApplied?.Invoke(new UpgradeData(ModuleType.Bullet, UpgradeType.ExtraAmmo, value: 1));
+            }
         }
     }
 }

@@ -1,7 +1,5 @@
 ﻿using Assets.Game.Scripts.Handlers;
 using Assets.Game.Scripts.Signals;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

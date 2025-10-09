@@ -37,7 +37,7 @@ namespace Assets.Game.Scripts.Modules
                     fireRate *= data.Multiplier;
                     break;
                 case UpgradeType.ExtraAmmo:
-                    ammoCount += Mathf.RoundToInt(data.Value);
+                    ammoCount += (byte)Mathf.RoundToInt(data.Value);
                     break;
                 case UpgradeType.ExplosionRadius:
                     explosionRadius += data.Value;
