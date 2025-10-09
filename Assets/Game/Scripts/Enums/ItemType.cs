@@ -1,6 +1,5 @@
-﻿public enum ItemTypes : sbyte
+﻿public enum ItemType : byte
 {
-    None = -1,
     //Ammunition: 0
     Bullet,
     Rocket,

@@ -15,7 +15,7 @@ namespace Assets.Game.Scripts.Controllers
             DataSignals.Instance.onGetColor += OnGetColor;
         }
 
-        private Color OnGetColor(ColorTypes colorType)
+        private Color OnGetColor(ColorType colorType)
         {
             return colorDatasSO.ColorDatas.Find(x => x.ColorType == colorType).Color;
         }

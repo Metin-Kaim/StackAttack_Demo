@@ -1,22 +1,23 @@
-﻿using System;
+﻿using Assets.Game.Scripts.Datas;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Assets.Game.Scripts.Signals
 {
-    public class DataSignals : MonoBehaviour
+    public class UpgradeSignals : MonoBehaviour
     {
-        public static DataSignals Instance;
+        public static UpgradeSignals Instance;
 
-        public Func<ColorType, Color> onGetColor;
+        public UnityAction<UpgradeData> onUpgradeApplied;
 
         private void Awake()
         {
             if (Instance != null && Instance != this)
             {
-                Destroy(gameObject);
-                return;
+                Destroy(Instance);
             }
+
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Assets.Game.Scripts.Signals
 {
@@ -8,6 +9,7 @@ namespace Assets.Game.Scripts.Signals
         public static PlayerSignals Instance;
 
         public Func<float> onGetPlayerPositionY;
+        public UnityAction<ModuleType> onAddModule;
 
         private void Awake()
         {

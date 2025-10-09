@@ -4,7 +4,7 @@ using UnityEngine;
 [System.Serializable]
 public class PoolData
 {
-    public ItemTypes ItemType;
+    public ItemType ItemType;
     public GameObject Prefab;
     public int InitialAmount;
     public int IncreaseAmount;

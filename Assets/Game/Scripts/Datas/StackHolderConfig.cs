@@ -8,6 +8,6 @@ namespace Assets.Game.Scripts.Datas
         public byte StackSize;
         public byte SizeMultiplier;
         public TextMeshPro StackText;
-        public ColorTypes ColorType;
+        public ColorType ColorType;
     }
 }

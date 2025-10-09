@@ -1,4 +1,4 @@
-public enum ColorTypes : sbyte
+public enum ColorType : sbyte
 {
     Blue,
     Purple,

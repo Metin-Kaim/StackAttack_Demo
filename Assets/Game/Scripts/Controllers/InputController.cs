@@ -1,3 +1,5 @@
+using Assets.Game.Scripts.Datas;
+using Assets.Game.Scripts.Signals;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Controllers
@@ -28,6 +30,20 @@ namespace Assets.Game.Scripts.Controllers
             {
                 _isTouching = false;
                 MouseDelta = Vector2.zero;
+            }
+
+
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                PlayerSignals.Instance.onAddModule?.Invoke(ModuleType.Rocket);
+            }
+            if (Input.GetKeyUp(KeyCode.T))
+            {
+                UpgradeSignals.Instance.onUpgradeApplied?.Invoke(new UpgradeData(
+                    ModuleType.Bullet,
+                    UpgradeType.FireRate,
+                    multiplier: 1.2f
+                ));
             }
         }
     }

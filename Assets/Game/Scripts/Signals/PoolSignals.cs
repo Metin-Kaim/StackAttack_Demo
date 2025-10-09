@@ -8,8 +8,8 @@ namespace Assets.Game.Scripts.Signals
     {
         public static PoolSignals Instance;
 
-        public Func<ItemTypes, GameObject> onGetItemFromPool;
-        public UnityAction<ItemTypes, GameObject> onItemReleased;
+        public Func<ItemType, GameObject> onGetItemFromPool;
+        public UnityAction<ItemType, GameObject> onItemReleased;
 
         private void Awake()
         {

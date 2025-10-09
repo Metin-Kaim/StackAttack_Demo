@@ -28,7 +28,7 @@ namespace Assets.Game.Scripts.Handlers
 
             for (int i = 0; i < Config.StackSize - 1; i++)
             {
-                GameObject hexagon = PoolSignals.Instance.onGetItemFromPool.Invoke(ItemTypes.Hexagon);
+                GameObject hexagon = PoolSignals.Instance.onGetItemFromPool.Invoke(ItemType.Hexagon);
                 hexagon.transform.SetParent(transform);
                 hexagon.transform.localPosition = .1f * i * Vector3.up;
                 SpriteRenderer sprite = hexagon.GetComponent<SpriteRenderer>();
@@ -36,7 +36,7 @@ namespace Assets.Game.Scripts.Handlers
                 sprite.sortingOrder = i;
                 hexagons.Add(hexagon);
             }
-            GameObject hexagonWText = PoolSignals.Instance.onGetItemFromPool.Invoke(ItemTypes.HexagonWithText);
+            GameObject hexagonWText = PoolSignals.Instance.onGetItemFromPool.Invoke(ItemType.HexagonWithText);
             hexagonWText.transform.SetParent(transform);
             hexagonWText.transform.localPosition = .1f * hexagons.Count * Vector3.up;
             SpriteRenderer sprite2 = hexagonWText.GetComponent<SpriteRenderer>();

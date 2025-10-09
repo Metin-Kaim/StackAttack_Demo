@@ -6,11 +6,11 @@ public class PoolManager : MonoBehaviour
 {
     [SerializeField] private List<PoolData> pools = new List<PoolData>();
 
-    private Dictionary<ItemTypes, PoolData> poolDictionary;
+    private Dictionary<ItemType, PoolData> poolDictionary;
 
     private void Awake()
     {
-        poolDictionary = new Dictionary<ItemTypes, PoolData>();
+        poolDictionary = new Dictionary<ItemType, PoolData>();
 
         foreach (var pool in pools)
         {
@@ -36,7 +36,7 @@ public class PoolManager : MonoBehaviour
         PoolSignals.Instance.onItemReleased -= Release;
     }
 
-    private GameObject Get(ItemTypes type)
+    private GameObject Get(ItemType type)
     {
         if (!poolDictionary.TryGetValue(type, out var pool))
         {
@@ -52,7 +52,7 @@ public class PoolManager : MonoBehaviour
         return obj;
     }
 
-    private void Release(ItemTypes type, GameObject obj)
+    private void Release(ItemType type, GameObject obj)
     {
         if (!poolDictionary.TryGetValue(type, out var pool))
         {

@@ -9,7 +9,7 @@ namespace Assets.Game.Scripts.Abstract
 {
     public abstract class AbsAmmunition : MonoBehaviour
     {
-        [SerializeField] protected ItemTypes itemType;
+        [SerializeField] protected ItemType itemType;
         [SerializeField] protected float duration = 2f;
         [SerializeField] protected float speed = 5f;
         [SerializeField] protected float radius = 0.2f;

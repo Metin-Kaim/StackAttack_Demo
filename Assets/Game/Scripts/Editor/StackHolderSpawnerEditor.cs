@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 using Assets.Game.Scripts.Handlers;
-using Assets.Game.Scripts.Datas; // ColorTypes burada tanımlı olduğunu varsayıyoruz
+using Assets.Game.Scripts.Datas; // ColorType burada tanımlı olduğunu varsayıyoruz
 
 [CustomEditor(typeof(StackHolderSpawner))]
 public class StackHolderSpawnerEditor : Editor
@@ -79,7 +79,7 @@ public class StackHolderSpawnerEditor : Editor
                     config.SizeMultiplier = (byte)Random.Range(boundsOfMultiplier.x, boundsOfMultiplier.y + 1);
 
                     // Rastgele bir ColorType seç
-                    var colors = (ColorTypes[])System.Enum.GetValues(typeof(ColorTypes));
+                    var colors = (ColorType[])System.Enum.GetValues(typeof(ColorType));
                     config.ColorType = colors[Random.Range(0, colors.Length)];
                 }
 

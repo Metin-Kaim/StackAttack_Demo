@@ -1,8 +1,7 @@
 ﻿using Assets.Game.Scripts.Abstract;
+using Assets.Game.Scripts.Modules;
 using Assets.Game.Scripts.Signals;
-using System.Collections;
 using System.Collections.Generic;
-using System.Net.Sockets;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Controllers
@@ -10,36 +9,81 @@ namespace Assets.Game.Scripts.Controllers
     public class PlayerShootController : MonoBehaviour
     {
         [SerializeField] private Transform bulletPoint;
-        [SerializeField] private float fireRate = 1.0f;
 
-        float _timer;
+        private bool _isTouchReleased;
+
+        private readonly List<AbsAmmunitionModule> _activeModules = new();
+        private Dictionary<ModuleType, AbsAmmunitionModule> allModules;
+
+        private void OnEnable()
+        {
+            PlayerSignals.Instance.onAddModule += AddModule;
+        }
+        private void OnDisable()
+        {
+            PlayerSignals.Instance.onAddModule -= AddModule;
+        }
 
         private void Start()
         {
-            _timer = fireRate;
+            BulletModule bulletModule = new();
+            RocketModule rocketModule = new();
+
+            allModules = new()
+            {
+                {ModuleType.Bullet, bulletModule},
+                {ModuleType.Rocket, rocketModule},
+            };
+
+            AddModule(ModuleType.Bullet);
         }
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                GameObject rocket = PoolSignals.Instance.onGetItemFromPool?.Invoke(ItemTypes.Rocket);
-                rocket.transform.position = bulletPoint.position;
-                rocket.GetComponent<AbsAmmunition>().Launch();
-            }
-
             if (InputSignals.Instance.onGetIsTouching.Invoke())
             {
-                _timer += Time.deltaTime;
-
-                if (_timer >= fireRate)
+                foreach (var module in _activeModules)
                 {
-                    _timer = 0;
-                    GameObject bullet = PoolSignals.Instance.onGetItemFromPool?.Invoke(ItemTypes.Bullet);
-                    bullet.transform.position = bulletPoint.position;
-                    bullet.GetComponent<AbsAmmunition>().Launch();
+                    module.Tick();
+                }
+
+                _isTouchReleased = false;
+            }
+            else if (!_isTouchReleased)
+            {
+                _isTouchReleased = true;
+
+                foreach (var module in _activeModules)
+                {
+                    module.Reset();
                 }
             }
         }
+
+        public void AddModule(ModuleType type)
+        {
+            allModules.TryGetValue(type, out AbsAmmunitionModule module);
+
+            if (module == null)
+            {
+                Debug.LogWarning("No module of this type was found!");
+                return;
+            }
+
+            if (_activeModules.Contains(module))
+            {
+                Debug.LogWarning("This module has already been added!");
+                return;
+            }
+
+            _activeModules.Add(module);
+            module.Initialize(bulletPoint);
+        }
+
+        //public void RemoveModule(AbsAmmunitionModule module)
+        //{
+        //    module.Dispose();
+        //    _activeModules.Remove(module);
+        //}
     }
 }
