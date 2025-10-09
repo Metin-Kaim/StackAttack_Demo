@@ -1,5 +1,6 @@
 using Assets.Game.Scripts.Controllers;
 using Assets.Game.Scripts.Signals;
+using System;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Managers
@@ -11,6 +12,12 @@ namespace Assets.Game.Scripts.Managers
         private void OnEnable()
         {
             InputSignals.Instance.onGetMouseDeltaX += OnGetMouseDelta;
+            InputSignals.Instance.onGetIsTouching += OnGetIsTouching;
+        }
+
+        private bool OnGetIsTouching()
+        {
+            return inputController.IsTouching;
         }
 
         private float OnGetMouseDelta()
@@ -21,6 +28,7 @@ namespace Assets.Game.Scripts.Managers
         private void OnDisable()
         {
             InputSignals.Instance.onGetMouseDeltaX -= OnGetMouseDelta;
+            InputSignals.Instance.onGetIsTouching -= OnGetIsTouching;
         }
     }
 }

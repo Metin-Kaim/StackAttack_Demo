@@ -5,19 +5,20 @@ namespace Assets.Game.Scripts.Controllers
     public class InputController : MonoBehaviour
     {
         private Vector2 _lastMousePosition;
-        private bool _isTracking = false;
+        private bool _isTouching;
 
         public Vector2 MouseDelta { get; private set; }
+        public bool IsTouching => _isTouching;
 
         private void Update()
         {
             if (Input.GetMouseButtonDown(0))
             {
-                _isTracking = true;
+                _isTouching = true;
                 _lastMousePosition = Input.mousePosition;
                 MouseDelta = Vector2.zero;
             }
-            else if (Input.GetMouseButton(0) && _isTracking)
+            else if (Input.GetMouseButton(0) && _isTouching)
             {
                 Vector2 currentMousePosition = Input.mousePosition;
                 MouseDelta = currentMousePosition - _lastMousePosition;
@@ -25,7 +26,7 @@ namespace Assets.Game.Scripts.Controllers
             }
             else if (Input.GetMouseButtonUp(0))
             {
-                _isTracking = false;
+                _isTouching = false;
                 MouseDelta = Vector2.zero;
             }
         }

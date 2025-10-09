@@ -8,6 +8,7 @@ namespace Assets.Game.Scripts.Signals
         public static InputSignals Instance;
 
         public Func<float> onGetMouseDeltaX;
+        public Func<bool> onGetIsTouching;
 
         private void Awake()
         {
