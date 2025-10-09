@@ -5,6 +5,7 @@ using Assets.Game.Scripts.Signals;
 using System.Collections.Generic;
 using TMPro;
 using System;
+using DG.Tweening;
 
 namespace Assets.Game.Scripts.Handlers
 {
@@ -15,8 +16,13 @@ namespace Assets.Game.Scripts.Handlers
         [SerializeField] private List<GameObject> hexagons;
         [SerializeField] private byte health;
 
+        private Vector3 _initScale;
+        private byte MaxHealth;
+
         private void Start()
         {
+            _initScale = transform.localScale;
+
             Color color = DataSignals.Instance.onGetColor.Invoke(Config.ColorType);
 
             for (int i = 0; i < Config.StackSize - 1; i++)
@@ -36,6 +42,7 @@ namespace Assets.Game.Scripts.Handlers
             Config.StackText = hexagons[^1].GetComponentInChildren<TextMeshPro>();
 
             health = (byte)(Config.StackSize * Config.SizeMultiplier);
+            MaxHealth = health;
 
             UpdateHealthText();
         }
@@ -50,27 +57,30 @@ namespace Assets.Game.Scripts.Handlers
         {
             health -= damage;
 
-            health = (byte)Mathf.Clamp(health, 0, health);
+            health = (byte)Mathf.Clamp(health, 0, MaxHealth);
+
+            if (health <= 0)
+            {
+                Destroy(gameObject);
+                return;
+            }
 
             UpdateHealthText();
 
-            int remainHexaCount = (int)Mathf.Floor((float)health / Config.SizeMultiplier);
-            int result = hexagons.Count - remainHexaCount;
-            print(result);
-            if (result >= 1)
+            int remainHexaCount = (int)Mathf.Ceil((float)health / Config.SizeMultiplier);
+            int destroyableHexaCount = hexagons.Count - remainHexaCount;
+
+            if (destroyableHexaCount >= 1)
             {
-                for (int i = 0; i < result; i++)
+                for (int i = 0; i < destroyableHexaCount; i++)
                 {
                     GameObject hexa = hexagons[0];
                     hexagons.Remove(hexa);
                     Destroy(hexa);
                     transform.position += Vector3.down * .1f;
                 }
-            }
-
-            if (health <= 0)
-            {
-                Destroy(gameObject);
+                transform.DOComplete();
+                transform.DOScale(_initScale + Vector3.one * 0.1f, 0.2f).SetLoops(2, LoopType.Yoyo).SetLink(gameObject, LinkBehaviour.KillOnDestroy);
             }
         }
 
