@@ -3,6 +3,8 @@
     None = -1,
     //Ammunition: 0
     Bullet,
+    Rocket,
+
 
     //Obstacles: 30
     Hexagon = 30,

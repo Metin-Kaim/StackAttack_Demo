@@ -1825,7 +1825,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28573a655cd26fc4bafaea4a8d0c0c39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerFollowYOffset: 2
+  playerFollowYOffset: 2.5
 --- !u!4 &780192049 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7054242135087792362, guid: 4194c6f8f19ab3e4ab0716f30d2f2234, type: 3}
@@ -2596,6 +2596,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dade911b74d4884bb14647c993b1865, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletPoint: {fileID: 951716773}
   fireRate: 0.3
 --- !u!1 &1397674721
 GameObject:
@@ -3162,13 +3163,17 @@ MonoBehaviour:
     Prefab: {fileID: 2428353805311146872, guid: 36dbfa075adf3744c88f296b960e4296, type: 3}
     InitialAmount: 20
     IncreaseAmount: 5
+  - ItemType: 1
+    Prefab: {fileID: 2428353805311146872, guid: 4bf9279357dc776458258afc7c86f00b, type: 3}
+    InitialAmount: 5
+    IncreaseAmount: 5
   - ItemType: 30
     Prefab: {fileID: 3542116619318954406, guid: 3ed08ba997946d640bf9c92edec74b68, type: 3}
     InitialAmount: 100
     IncreaseAmount: 10
   - ItemType: 31
     Prefab: {fileID: 544345421485360609, guid: ea80410d3869fe94389c140285ab94ba, type: 3}
-    InitialAmount: 20
+    InitialAmount: 30
     IncreaseAmount: 5
 --- !u!4 &1684478178
 Transform:

@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5599859193524276724}
   - component: {fileID: 6792663808157090101}
-  - component: {fileID: -5820638566682903352}
+  - component: {fileID: 3303476108150522459}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: Rocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.08, y: 0.68, z: 0}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_LocalScale: {x: 0.291075, y: 0.53161025, z: 0.25}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3625610122569039076}
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 299
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.34509805, g: 0.79215693, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.60784316, b: 0.2392157, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -90,7 +90,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-5820638566682903352
+--- !u!114 &3303476108150522459
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -99,17 +99,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 2428353805311146872}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 237a6922614d35942b489c39c83c708c, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b9a8cdf64ec5e949bd6cdf9be503222, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 0
+  itemType: 1
   duration: 2
-  speed: 7
-  radius: 0.1
+  speed: 6
+  radius: 0.3
   targetMask:
     serializedVersion: 2
     m_Bits: 128
-  damage: 1
+  damage: 5
+  amplitude: 4
+  frequency: 1
+  rotationSmoothness: 50
+  hitRadius: 1
 --- !u!1 &7748343757500842737
 GameObject:
   m_ObjectHideFlags: 0
@@ -223,7 +227,7 @@ Transform:
   m_GameObject: {fileID: 8418777781962222891}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.13, z: 0}
+  m_LocalPosition: {x: 0, y: 0.46, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -274,7 +278,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 297
-  m_Time: 0.22
+  m_Time: 0.5
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
@@ -283,8 +287,8 @@ TrailRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 0.3025374
+        time: 0.0060424805
+        value: 0.48581073
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -305,8 +309,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0, g: 0.91119623, b: 1, a: 1}
-      key1: {r: 0, g: 0.909804, b: 1, a: 0}
+      key0: {r: 1, g: 0.60784316, b: 0.2392157, a: 1}
+      key1: {r: 1, g: 0.60784316, b: 0.2392157, a: 0}
       key2: {r: 1, g: 0.5254902, b: 0, a: 0}
       key3: {r: 0.1, g: 0.1, b: 0.25, a: 0}
       key4: {r: 1, g: 0.8, b: 0.4, a: 0}
@@ -334,7 +338,7 @@ TrailRenderer:
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
-    numCapVertices: 3
+    numCapVertices: 10
     alignment: 0
     textureMode: 0
     textureScale: {x: 0, y: 0}

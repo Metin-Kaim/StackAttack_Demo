@@ -1,11 +1,12 @@
 ﻿using Assets.Game.Scripts.Datas;
-using UnityEngine;
-using EditorAttributes;
 using Assets.Game.Scripts.Signals;
+using DG.Tweening;
+using EditorAttributes;
+using System;
 using System.Collections.Generic;
 using TMPro;
-using System;
-using DG.Tweening;
+using UnityEngine;
+using static UnityEngine.Rendering.STP;
 
 namespace Assets.Game.Scripts.Handlers
 {
@@ -30,16 +31,21 @@ namespace Assets.Game.Scripts.Handlers
                 GameObject hexagon = PoolSignals.Instance.onGetItemFromPool.Invoke(ItemTypes.Hexagon);
                 hexagon.transform.SetParent(transform);
                 hexagon.transform.localPosition = .1f * i * Vector3.up;
-                hexagon.GetComponent<SpriteRenderer>().color = color;
+                SpriteRenderer sprite = hexagon.GetComponent<SpriteRenderer>();
+                sprite.color = color;
+                sprite.sortingOrder = i;
                 hexagons.Add(hexagon);
             }
             GameObject hexagonWText = PoolSignals.Instance.onGetItemFromPool.Invoke(ItemTypes.HexagonWithText);
             hexagonWText.transform.SetParent(transform);
             hexagonWText.transform.localPosition = .1f * hexagons.Count * Vector3.up;
-            hexagonWText.GetComponent<SpriteRenderer>().color = color;
+            SpriteRenderer sprite2 = hexagonWText.GetComponent<SpriteRenderer>();
+            sprite2.color = color;
+            sprite2.sortingOrder = hexagons.Count;
             hexagons.Add(hexagonWText);
 
             Config.StackText = hexagons[^1].GetComponentInChildren<TextMeshPro>();
+            Config.StackText.sortingOrder = hexagons.Count;
 
             health = (byte)(Config.StackSize * Config.SizeMultiplier);
             MaxHealth = health;
@@ -57,8 +63,11 @@ namespace Assets.Game.Scripts.Handlers
         {
             health -= damage;
 
-            health = (byte)Mathf.Clamp(health, 0, MaxHealth);
-
+            if (health > MaxHealth)
+            {
+                health = 0;
+            }
+            //print(health);
             if (health <= 0)
             {
                 Destroy(gameObject);

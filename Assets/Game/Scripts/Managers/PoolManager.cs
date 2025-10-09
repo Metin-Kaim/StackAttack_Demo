@@ -70,8 +70,6 @@ public class PoolManager : MonoBehaviour
         {
             CreateItem(pool);
         }
-
-        Debug.Log($"{pool.ItemType} expanded by {pool.IncreaseAmount}");
     }
 
     private void CreateItem(PoolData pool)

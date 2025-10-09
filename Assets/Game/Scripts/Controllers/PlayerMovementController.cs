@@ -20,7 +20,6 @@ namespace Assets.Game.Scripts.Controllers
             newPosition.x = Mathf.Clamp(newPosition.x, borderOfMovement.x, borderOfMovement.y);
 
             transform.position = newPosition;
-
         }
     }
 }
