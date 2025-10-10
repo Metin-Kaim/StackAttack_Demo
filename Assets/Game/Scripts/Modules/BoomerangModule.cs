@@ -1,39 +1,38 @@
-using Assets.Game.Scripts.Abstract;
+﻿using Assets.Game.Scripts.Abstract;
 using Assets.Game.Scripts.Datas;
 using Assets.Game.Scripts.Signals;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Modules
 {
-    public class RocketModule : AbsAmmunitionModule
+    public class BoomerangModule : AbsAmmunitionModule
     {
-        private float explosionRadius;
-        private int rocketsFired;
+        private float size;
         private bool isFiring;
-        private float rocketDelayTimer;
+        private float boomerangDelayTimer;
         private float launchDelay;
-        
-        public RocketModule(AbsModuleData moduleData) : base(moduleData)
+        private int boomerangsFired;
+
+        public BoomerangModule(AbsModuleData data) : base(data)
         {
             base.moduleData = moduleData;
-            explosionRadius = (moduleData as RocketModuleData).ExplosionRadius;
-            launchDelay = (moduleData as RocketModuleData).LaunchDelay;
+            size = (data as BoomerangModuleData).Size;
         }
 
-        public override ModuleType ModuleType => ModuleType.Rocket;
+        public override ModuleType ModuleType => ModuleType.Boomerang;
 
         public override void Tick()
         {
             if (isFiring)
             {
-                rocketDelayTimer += Time.deltaTime;
-                if (rocketDelayTimer >= launchDelay)
+                boomerangDelayTimer += Time.deltaTime;
+                if (boomerangDelayTimer >= launchDelay)
                 {
-                    rocketDelayTimer = 0f;
-                    SpawnRocket();
-                    rocketsFired++;
+                    boomerangDelayTimer = 0f;
+                    SpawnBoomerang();
+                    boomerangsFired++;
 
-                    if (rocketsFired >= ammoCount)
+                    if (boomerangsFired >= ammoCount)
                         isFiring = false;
                 }
             }
@@ -48,23 +47,20 @@ namespace Assets.Game.Scripts.Modules
                 }
             }
         }
-
         protected override void Fire()
         {
             isFiring = true;
-            rocketsFired = 0;
-            rocketDelayTimer = 0f;
+            boomerangsFired = 0;
+            boomerangDelayTimer = 0f;
         }
-
-        private void SpawnRocket()
+        private void SpawnBoomerang()
         {
-            GameObject rocket = PoolSignals.Instance.onGetItemFromPool?.Invoke(ItemType.Rocket);
-            rocket.transform.position = bulletPoint.position;
-            AbsAmmunition ammunition = rocket.GetComponent<AbsAmmunition>();
+            GameObject boomerang = PoolSignals.Instance.onGetItemFromPool?.Invoke(ItemType.Boomerang);
+            boomerang.transform.position = bulletPoint.position;
+            AbsAmmunition ammunition = boomerang.GetComponent<AbsAmmunition>();
             ammunition.Initialize(moduleData);
             ammunition.Launch();
         }
-
         protected override void ApplyUpgrade(UpgradeData data)
         {
             switch (data.UpgradeType)
@@ -75,8 +71,8 @@ namespace Assets.Game.Scripts.Modules
                 case UpgradeType.ExtraAmmo:
                     ammoCount += (byte)Mathf.RoundToInt(data.Value);
                     break;
-                case UpgradeType.ExplosionRadius:
-                    explosionRadius += data.Value;
+                case UpgradeType.Size:
+                    size *= data.Multiplier;
                     break;
             }
         }

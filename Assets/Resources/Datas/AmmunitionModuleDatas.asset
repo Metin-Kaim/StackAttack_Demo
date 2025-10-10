@@ -18,9 +18,14 @@ MonoBehaviour:
       FireRate: 2
       AmmoCount: 1
       Piercing: 0
-    RocketModuleInfo:
+    RocketModuleData:
       ModuleType: 1
-      FireRate: 0.1
+      FireRate: 0.15
       AmmoCount: 3
       ExplosionRadius: 1
-      LaunchDelay: 0.3
+      LaunchDelay: 0.25
+    BoomerangModuleData:
+      ModuleType: 2
+      FireRate: 0.2
+      AmmoCount: 2
+      Size: 0.3

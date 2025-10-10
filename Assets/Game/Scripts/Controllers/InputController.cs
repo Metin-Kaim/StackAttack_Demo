@@ -49,6 +49,10 @@ namespace Assets.Game.Scripts.Controllers
             {
                 UpgradeSignals.Instance.onUpgradeApplied?.Invoke(new UpgradeData(ModuleType.Bullet, UpgradeType.ExtraAmmo, value: 1));
             }
+            if (Input.GetKeyDown(KeyCode.B))
+            {
+                PlayerSignals.Instance.onAddModule?.Invoke(ModuleType.Boomerang);
+            }
         }
     }
 }

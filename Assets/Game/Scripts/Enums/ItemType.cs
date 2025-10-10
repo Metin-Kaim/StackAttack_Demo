@@ -3,6 +3,7 @@
     //Ammunition: 0
     Bullet,
     Rocket,
+    Boomerang,
 
 
     //Obstacles: 30

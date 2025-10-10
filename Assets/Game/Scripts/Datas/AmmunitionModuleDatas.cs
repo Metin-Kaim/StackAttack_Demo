@@ -6,7 +6,8 @@ namespace Assets.Game.Scripts.Datas
     public class AmmunitionModuleDatas
     {
         public BulletModuleData BulletModuleData;
-        public RocketModuleData RocketModuleInfo;
+        public RocketModuleData RocketModuleData;
+        public BoomerangModuleData BoomerangModuleData;
     }
 
     [Serializable]
@@ -20,6 +21,15 @@ namespace Assets.Game.Scripts.Datas
     {
         public float ExplosionRadius;
         public float LaunchDelay;
+    }
+
+    [Serializable]
+    public class BoomerangModuleData : AbsModuleData
+    {
+        //public float ReturnDelay;
+        //public float MaxDistance;
+        //public float RotationSpeed;
+        public float Size;
     }
 
     [Serializable]

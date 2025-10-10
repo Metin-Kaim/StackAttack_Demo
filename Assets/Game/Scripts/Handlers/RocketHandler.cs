@@ -12,20 +12,17 @@ public class RocketHandler : AbsAmmunition
     [SerializeField] private float explosionRadius;
 
     private Vector3 _lastPos;
-    private float _phaseOffset; // 🔸 Dalga yönünü belirleyecek
+    private float _phaseOffset;
 
     protected override void Move()
     {
-        // Base hareket: lineer yukarı hareket ve timer kontrolü
         base.Move();
 
-        // Dalgalı hareket (x ekseninde)
-        float t = timer / duration; // normalize edilmiş zaman
+        float t = timer / duration;
         float waveOffset = Mathf.Sin(t * frequency * Mathf.PI * 2 + _phaseOffset) * amplitude;
 
         transform.position += Time.deltaTime * waveOffset * Vector3.right;
 
-        // Rotasyon
         Vector3 direction = (transform.position - _lastPos).normalized;
         if (direction.sqrMagnitude > 0.0001f)
         {

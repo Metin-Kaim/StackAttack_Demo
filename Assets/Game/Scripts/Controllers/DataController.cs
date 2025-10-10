@@ -28,7 +28,9 @@ namespace Assets.Game.Scripts.Controllers
             if (moduleType == ModuleType.Bullet)
                 return ammunitionModuleDatasSO.AmmunitionModuleDatas.BulletModuleData;
             else if (moduleType == ModuleType.Rocket)
-                return ammunitionModuleDatasSO.AmmunitionModuleDatas.RocketModuleInfo;
+                return ammunitionModuleDatasSO.AmmunitionModuleDatas.RocketModuleData;
+            else if (moduleType == ModuleType.Boomerang)
+                return ammunitionModuleDatasSO.AmmunitionModuleDatas.BoomerangModuleData;
             else
                 throw new Exception("Module Type Not Found!");
         }

@@ -28,11 +28,13 @@ namespace Assets.Game.Scripts.Controllers
         {
             BulletModule bulletModule = new(DataSignals.Instance.onGetModuleData.Invoke(ModuleType.Bullet));
             RocketModule rocketModule = new(DataSignals.Instance.onGetModuleData.Invoke(ModuleType.Rocket));
+            BoomerangModule boomerangModule = new(DataSignals.Instance.onGetModuleData.Invoke(ModuleType.Boomerang));
 
             allModules = new()
             {
                 {ModuleType.Bullet, bulletModule},
                 {ModuleType.Rocket, rocketModule},
+                {ModuleType.Boomerang, boomerangModule}
             };
 
             AddModule(ModuleType.Bullet);

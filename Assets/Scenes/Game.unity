@@ -5379,6 +5379,10 @@ MonoBehaviour:
     Prefab: {fileID: 2428353805311146872, guid: 4bf9279357dc776458258afc7c86f00b, type: 3}
     InitialAmount: 5
     IncreaseAmount: 5
+  - ItemType: 2
+    Prefab: {fileID: 2428353805311146872, guid: 0c82f3d1c66e05245a4f3399ec9832ea, type: 3}
+    InitialAmount: 5
+    IncreaseAmount: 5
   - ItemType: 30
     Prefab: {fileID: 3542116619318954406, guid: 3ed08ba997946d640bf9c92edec74b68, type: 3}
     InitialAmount: 100
