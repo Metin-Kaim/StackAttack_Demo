@@ -26,8 +26,8 @@ namespace Assets.Game.Scripts.Controllers
 
         private void Start()
         {
-            BulletModule bulletModule = new();
-            RocketModule rocketModule = new();
+            BulletModule bulletModule = new(DataSignals.Instance.onGetModuleData.Invoke(ModuleType.Bullet));
+            RocketModule rocketModule = new(DataSignals.Instance.onGetModuleData.Invoke(ModuleType.Rocket));
 
             allModules = new()
             {

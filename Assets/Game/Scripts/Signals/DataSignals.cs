@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using Assets.Game.Scripts.Datas;
+using System;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Signals
@@ -9,6 +9,7 @@ namespace Assets.Game.Scripts.Signals
         public static DataSignals Instance;
 
         public Func<ColorType, Color> onGetColor;
+        public Func<ModuleType, AbsModuleData> onGetModuleData;
 
         private void Awake()
         {

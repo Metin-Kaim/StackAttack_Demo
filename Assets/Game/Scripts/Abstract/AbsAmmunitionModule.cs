@@ -8,8 +8,14 @@ namespace Assets.Game.Scripts.Abstract
     {
         protected Transform bulletPoint;
         protected float fireTimer;
-        protected byte ammoCount = 1;
-        protected float fireRate = 1.5f;
+        protected byte ammoCount;
+        protected float fireRate;
+
+        protected AbsAmmunitionModule(AbsModuleData data)
+        {
+            this.fireRate = data.FireRate;
+            this.ammoCount = data.AmmoCount;
+        }
 
         public abstract ModuleType ModuleType { get; }
 
@@ -21,7 +27,7 @@ namespace Assets.Game.Scripts.Abstract
 
         private void OnUpgradeReceived(UpgradeData data)
         {
-            if (data.TargetModuleType == ModuleType || data.TargetModuleType == ModuleType.All)
+            if (data.TargetModuleType == ModuleType)
             {
                 ApplyUpgrade(data);
             }

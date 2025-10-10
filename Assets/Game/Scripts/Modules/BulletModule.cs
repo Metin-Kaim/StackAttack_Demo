@@ -9,15 +9,20 @@ namespace Assets.Game.Scripts.Modules
 {
     public class BulletModule : AbsAmmunitionModule
     {
-        private bool piercing = false;
-
-        public override ModuleType ModuleType => ModuleType.Bullet;
-
+        private bool piercing;
         private AbsBulletState currentBulletState;
+
         SingleBulletState singleBulletState;
         DoubleBulletState doubleBulletState;
 
         Dictionary<byte, AbsBulletState> bulletStates;
+
+        public override ModuleType ModuleType => ModuleType.Bullet;
+
+        public BulletModule(AbsModuleData info) : base(info)
+        {
+            piercing = (info as BulletModuleData).Piercing;
+        }
 
         public override void Tick()
         {

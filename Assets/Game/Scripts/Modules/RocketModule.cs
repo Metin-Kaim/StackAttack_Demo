@@ -7,9 +7,19 @@ namespace Assets.Game.Scripts.Modules
 {
     public class RocketModule : AbsAmmunitionModule
     {
-        public override ModuleType ModuleType => ModuleType.Rocket;
+        private float explosionRadius;
+        private int rocketsFired = 0;
+        private bool isFiring = false;
+        private float rocketDelayTimer = 0f;
+        private float launchDelay;
 
-        private float explosionRadius = 1f;
+        public RocketModule(AbsModuleData info) : base(info)
+        {
+            explosionRadius = (info as RocketModuleData).ExplosionRadius;
+            launchDelay = (info as RocketModuleData).LaunchDelay;
+        }
+
+        public override ModuleType ModuleType => ModuleType.Rocket;
 
         public override void Tick()
         {
@@ -20,9 +30,31 @@ namespace Assets.Game.Scripts.Modules
                 fireTimer = 0;
                 Fire();
             }
+
+            // Delayli spawn kontrolü
+            if (isFiring)
+            {
+                rocketDelayTimer += Time.deltaTime;
+                if (rocketDelayTimer >= launchDelay)
+                {
+                    rocketDelayTimer = 0f;
+                    SpawnRocket();
+                    rocketsFired++;
+
+                    if (rocketsFired >= ammoCount)
+                        isFiring = false;
+                }
+            }
         }
 
         protected override void Fire()
+        {
+            isFiring = true;
+            rocketsFired = 0;
+            rocketDelayTimer = 0f;
+        }
+
+        private void SpawnRocket()
         {
             GameObject rocket = PoolSignals.Instance.onGetItemFromPool?.Invoke(ItemType.Rocket);
             rocket.transform.position = bulletPoint.position;

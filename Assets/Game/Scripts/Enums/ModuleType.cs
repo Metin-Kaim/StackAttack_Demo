@@ -3,5 +3,4 @@
     Bullet,
     Rocket,
     Boomerang,
-    All
 }

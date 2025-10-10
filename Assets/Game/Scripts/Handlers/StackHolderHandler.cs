@@ -17,6 +17,7 @@ namespace Assets.Game.Scripts.Handlers
         [SerializeField] private List<GameObject> hexagons;
         [SerializeField] private byte health;
 
+        private TextMeshPro _healthText;
         private Vector3 _initScale;
         private byte MaxHealth;
 
@@ -44,8 +45,8 @@ namespace Assets.Game.Scripts.Handlers
             sprite2.sortingOrder = hexagons.Count;
             hexagons.Add(hexagonWText);
 
-            Config.StackText = hexagons[^1].GetComponentInChildren<TextMeshPro>();
-            Config.StackText.sortingOrder = hexagons.Count;
+            _healthText = hexagons[^1].GetComponentInChildren<TextMeshPro>();
+            _healthText.sortingOrder = hexagons.Count;
 
             health = (byte)(Config.StackSize * Config.SizeMultiplier);
             MaxHealth = health;
@@ -95,7 +96,7 @@ namespace Assets.Game.Scripts.Handlers
 
         private void UpdateHealthText()
         {
-            Config.StackText.text = health.ToString();
+            _healthText.text = health.ToString();
         }
     }
 }
