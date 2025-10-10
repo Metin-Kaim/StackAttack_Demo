@@ -10,6 +10,7 @@ namespace Assets.Game.Scripts.Abstract
         protected float fireTimer;
         protected byte ammoCount;
         protected float fireRate;
+        protected AbsModuleData moduleData;
 
         protected AbsAmmunitionModule(AbsModuleData data)
         {

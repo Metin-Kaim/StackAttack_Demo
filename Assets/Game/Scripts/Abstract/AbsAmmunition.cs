@@ -1,4 +1,5 @@
-﻿using Assets.Game.Scripts.Handlers;
+﻿using Assets.Game.Scripts.Datas;
+using Assets.Game.Scripts.Handlers;
 using Assets.Game.Scripts.Signals;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +20,7 @@ namespace Assets.Game.Scripts.Abstract
         protected float timer;
         protected TrailRenderer trailRenderer;
         protected bool isLaunched;
+        protected AbsModuleData module;
 
         private void Awake()
         {
@@ -53,7 +55,11 @@ namespace Assets.Game.Scripts.Abstract
                 }
             }
         }
+        public virtual void Initialize(AbsModuleData module)
+        {
+            this.module = module;
 
+        }
         protected virtual void Hit(StackHolderHandler stack)
         {
             stack.Hit(damage);

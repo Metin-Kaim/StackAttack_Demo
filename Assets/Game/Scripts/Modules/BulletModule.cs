@@ -21,6 +21,7 @@ namespace Assets.Game.Scripts.Modules
 
         public BulletModule(AbsModuleData info) : base(info)
         {
+            base.moduleData = moduleData;
             piercing = (info as BulletModuleData).Piercing;
         }
 
@@ -61,8 +62,8 @@ namespace Assets.Game.Scripts.Modules
         {
             base.Initialize(bulletPoint);
 
-            singleBulletState = new SingleBulletState(bulletPoint);
-            doubleBulletState = new DoubleBulletState(bulletPoint);
+            singleBulletState = new SingleBulletState(bulletPoint, moduleData);
+            doubleBulletState = new DoubleBulletState(bulletPoint, moduleData);
 
             bulletStates = new()
             {

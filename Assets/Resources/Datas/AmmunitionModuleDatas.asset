@@ -20,7 +20,7 @@ MonoBehaviour:
       Piercing: 0
     RocketModuleInfo:
       ModuleType: 1
-      FireRate: 0.5
+      FireRate: 0.1
       AmmoCount: 3
       ExplosionRadius: 1
-      LaunchDelay: 0.15
+      LaunchDelay: 0.3

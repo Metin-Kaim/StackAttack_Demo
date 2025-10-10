@@ -1,4 +1,5 @@
 ﻿using Assets.Game.Scripts.Abstract;
+using Assets.Game.Scripts.Datas;
 using Assets.Game.Scripts.Handlers;
 using Assets.Game.Scripts.Signals;
 using UnityEngine;
@@ -8,7 +9,7 @@ public class RocketHandler : AbsAmmunition
     [SerializeField] private float amplitude = 1f;
     [SerializeField] private float frequency = 3f;
     [SerializeField] private float rotationSmoothness = 10f;
-    [SerializeField] private float hitRadius;
+    [SerializeField] private float explosionRadius;
 
     private Vector3 _lastPos;
     private float _phaseOffset; // 🔸 Dalga yönünü belirleyecek
@@ -46,7 +47,7 @@ public class RocketHandler : AbsAmmunition
 
     protected override void Hit(StackHolderHandler stack)
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, hitRadius, targetMask);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, (module as RocketModuleData).ExplosionRadius, targetMask);
 
         if (hits.Length > 0)
         {
@@ -67,6 +68,6 @@ public class RocketHandler : AbsAmmunition
         base.OnDrawGizmos();
 
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, hitRadius);
+        Gizmos.DrawWireSphere(transform.position, explosionRadius);
     }
 }
