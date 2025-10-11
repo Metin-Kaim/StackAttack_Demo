@@ -101,14 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8834d0c4a159d14a865331869f50597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 0
-  duration: 1
-  speed: 3
-  radius: 0.2
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 128
-  damage: 3
+  itemType: 2
   arcHeight: 2
   rotationSpeed: 720
 --- !u!1 &8418777781962222891

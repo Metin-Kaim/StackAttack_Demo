@@ -4,13 +4,8 @@ using Assets.Game.Scripts.Handlers;
 using Assets.Game.Scripts.Signals;
 using UnityEngine;
 
-public class RocketHandler : AbsAmmunition
+public class RocketHandler : AbsAmmunitionHandler
 {
-    [SerializeField] private float amplitude = 1f;
-    [SerializeField] private float frequency = 3f;
-    [SerializeField] private float rotationSmoothness = 10f;
-    [SerializeField] private float explosionRadius;
-
     private Vector3 _lastPos;
     private float _phaseOffset;
 
@@ -18,8 +13,8 @@ public class RocketHandler : AbsAmmunition
     {
         base.Move();
 
-        float t = timer / duration;
-        float waveOffset = Mathf.Sin(t * frequency * Mathf.PI * 2 + _phaseOffset) * amplitude;
+        float t = timer / data.duration;
+        float waveOffset = Mathf.Sin(t * (data as RocketData).frequency * Mathf.PI * 2 + _phaseOffset) * (data as RocketData).amplitude;
 
         transform.position += Time.deltaTime * waveOffset * Vector3.right;
 
@@ -28,7 +23,7 @@ public class RocketHandler : AbsAmmunition
         {
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
             Quaternion targetRot = Quaternion.Euler(0, 0, angle);
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, rotationSmoothness * Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, (data as RocketData).rotationSmoothness * Time.deltaTime);
         }
 
         _lastPos = transform.position;
@@ -36,15 +31,14 @@ public class RocketHandler : AbsAmmunition
 
     public override void Launch()
     {
-        base.Launch();
-
         _phaseOffset = Random.Range(-3, 3);
         _lastPos = transform.position;
+        base.Launch();
     }
 
     protected override void Hit(StackHolderHandler stack)
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, (module as RocketModuleData).ExplosionRadius, targetMask);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, (data as RocketData).ExplosionRadius, data.targetMask);
 
         if (hits.Length > 0)
         {
@@ -52,7 +46,7 @@ public class RocketHandler : AbsAmmunition
             {
                 if (hit.TryGetComponent(out StackHolderHandler handler))
                 {
-                    handler.Hit(damage);
+                    handler.Hit(data.damage);
                 }
             }
         }
@@ -65,6 +59,6 @@ public class RocketHandler : AbsAmmunition
         base.OnDrawGizmos();
 
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, explosionRadius);
+        Gizmos.DrawWireSphere(transform.position, (data as RocketData).ExplosionRadius);
     }
 }

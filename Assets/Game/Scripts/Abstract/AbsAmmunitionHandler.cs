@@ -6,21 +6,17 @@ using UnityEngine;
 
 namespace Assets.Game.Scripts.Abstract
 {
-    public abstract class AbsAmmunition : MonoBehaviour
+    public abstract class AbsAmmunitionHandler : MonoBehaviour
     {
         [SerializeField] protected ItemType itemType;
-        [SerializeField] protected float duration = 2f;
-        [SerializeField] protected float speed = 5f;
-        [SerializeField] protected float radius = 0.2f;
-        [SerializeField] protected LayerMask targetMask;
-        [SerializeField] protected byte damage;
+        
 
         protected HashSet<StackHolderHandler> hitTargets = new();
 
         protected float timer;
         protected TrailRenderer trailRenderer;
         protected bool isLaunched;
-        protected AbsModuleData module;
+        protected AbsAmmunitionData data;
 
         private void Awake()
         {
@@ -43,7 +39,7 @@ namespace Assets.Game.Scripts.Abstract
 
         protected void CheckHits()
         {
-            Collider2D hit = Physics2D.OverlapCircle(transform.position, radius, targetMask);
+            Collider2D hit = Physics2D.OverlapCircle(transform.position, data.radius, data.targetMask);
 
             if (hit == null) return;
 
@@ -55,23 +51,23 @@ namespace Assets.Game.Scripts.Abstract
                 }
             }
         }
-        public virtual void Initialize(AbsModuleData module)
+        public virtual void Initialize(AbsAmmunitionData data)
         {
-            this.module = module;
+            this.data = data;
 
         }
         protected virtual void Hit(StackHolderHandler stack)
         {
-            stack.Hit(damage);
+            stack.Hit(data.damage);
             PoolSignals.Instance.onItemReleased?.Invoke(itemType, gameObject);
         }
 
         protected virtual void Move()
         {
-            transform.position += speed * Time.deltaTime * Vector3.up;
+            transform.position += data.speed * Time.deltaTime * Vector3.up;
 
             timer += Time.deltaTime;
-            if (timer >= duration)
+            if (timer >= data.duration)
             {
                 PoolSignals.Instance.onItemReleased?.Invoke(itemType, gameObject);
                 return;
@@ -89,7 +85,7 @@ namespace Assets.Game.Scripts.Abstract
         protected virtual void OnDrawGizmos()
         {
             Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(transform.position, radius);
+            Gizmos.DrawWireSphere(transform.position, data.radius);
         }
 #endif
     }

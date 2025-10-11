@@ -1,41 +1,39 @@
 ﻿using System;
-    
+using UnityEngine;
+
 namespace Assets.Game.Scripts.Datas
 {
     [Serializable]
     public class AmmunitionModuleDatas
     {
         public BulletModuleData BulletModuleData;
+        [Space]
         public RocketModuleData RocketModuleData;
+        [Space]
         public BoomerangModuleData BoomerangModuleData;
     }
 
     [Serializable]
     public class BulletModuleData : AbsModuleData
     {
-        public bool Piercing;
+        public BulletData BulletData;
     }
 
     [Serializable]
     public class RocketModuleData : AbsModuleData
     {
-        public float ExplosionRadius;
-        public float LaunchDelay;
+        public RocketData RocketData;
     }
 
     [Serializable]
     public class BoomerangModuleData : AbsModuleData
     {
-        //public float ReturnDelay;
-        //public float MaxDistance;
-        //public float RotationSpeed;
-        public float Size;
+        public BoomerangData BoomerangData;
     }
 
     [Serializable]
     public abstract class AbsModuleData
     {
-        public ModuleType ModuleType;
         public float FireRate;
         public byte AmmoCount;
     }

@@ -9,20 +9,24 @@ namespace Assets.Game.Scripts.Modules.BulletStates
     public abstract class AbsBulletState
     {
         protected Transform centerBulletPoint;
-        private AbsModuleData moduleData;
+        private AbsAmmunitionModule module;
 
-        protected AbsBulletState(Transform centerBulletPoint, AbsModuleData moduleData)
+        public BulletData BulletData;
+
+        protected AbsBulletState(Transform centerBulletPoint, AbsAmmunitionModule module)
         {
+            BulletData = (module as BulletModule).BulletData;
+
             this.centerBulletPoint = centerBulletPoint;
-            this.moduleData = moduleData;
+            this.module = module;
         }
 
         protected void FireBullet(Vector3 bulletPosition)
         {
             GameObject bullet = PoolSignals.Instance.onGetItemFromPool?.Invoke(ItemType.Bullet);
             bullet.transform.position = bulletPosition;
-            AbsAmmunition ammunition = bullet.GetComponent<AbsAmmunition>();
-            ammunition.Initialize(moduleData);
+            AbsAmmunitionHandler ammunition = bullet.GetComponent<AbsAmmunitionHandler>();
+            ammunition.Initialize(BulletData);
             ammunition.Launch();
         }
 

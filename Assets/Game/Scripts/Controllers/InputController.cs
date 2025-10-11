@@ -35,24 +35,9 @@ namespace Assets.Game.Scripts.Controllers
 
             if (Input.GetKeyDown(KeyCode.R))
             {
-                PlayerSignals.Instance.onAddModule?.Invoke(ModuleType.Rocket);
+                CanvasSignals.Instance.onShowUpgradeCards?.Invoke();
             }
-            if (Input.GetKeyUp(KeyCode.T))
-            {
-                UpgradeSignals.Instance.onUpgradeApplied?.Invoke(new UpgradeData(
-                    ModuleType.Bullet,
-                    UpgradeType.FireRate,
-                    multiplier: 1.2f
-                ));
-            }
-            if (Input.GetKeyDown(KeyCode.Y))
-            {
-                UpgradeSignals.Instance.onUpgradeApplied?.Invoke(new UpgradeData(ModuleType.Bullet, UpgradeType.ExtraAmmo, value: 1));
-            }
-            if (Input.GetKeyDown(KeyCode.B))
-            {
-                PlayerSignals.Instance.onAddModule?.Invoke(ModuleType.Boomerang);
-            }
+            
         }
     }
 }

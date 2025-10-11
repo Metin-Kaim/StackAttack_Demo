@@ -7,17 +7,17 @@ namespace Assets.Game.Scripts.Modules
 {
     public class RocketModule : AbsAmmunitionModule
     {
-        private float explosionRadius;
         private int rocketsFired;
         private bool isFiring;
         private float rocketDelayTimer;
-        private float launchDelay;
-        
+
+        private RocketModuleData rocketModuleData;
+        private RocketData rocketData;
+
         public RocketModule(AbsModuleData moduleData) : base(moduleData)
         {
-            base.moduleData = moduleData;
-            explosionRadius = (moduleData as RocketModuleData).ExplosionRadius;
-            launchDelay = (moduleData as RocketModuleData).LaunchDelay;
+            rocketModuleData = (moduleData as RocketModuleData);
+            rocketData = rocketModuleData.RocketData;
         }
 
         public override ModuleType ModuleType => ModuleType.Rocket;
@@ -27,13 +27,13 @@ namespace Assets.Game.Scripts.Modules
             if (isFiring)
             {
                 rocketDelayTimer += Time.deltaTime;
-                if (rocketDelayTimer >= launchDelay)
+                if (rocketDelayTimer >= rocketData.LaunchDelay)
                 {
                     rocketDelayTimer = 0f;
                     SpawnRocket();
                     rocketsFired++;
 
-                    if (rocketsFired >= ammoCount)
+                    if (rocketsFired >= rocketModuleData.AmmoCount)
                         isFiring = false;
                 }
             }
@@ -41,9 +41,9 @@ namespace Assets.Game.Scripts.Modules
             {
                 fireTimer += Time.deltaTime;
 
-                if (fireTimer >= 1f / fireRate)
+                if (fireTimer >= 1f / rocketModuleData.FireRate)
                 {
-                    fireTimer = 0;
+                    fireTimer = -((rocketData.duration * rocketModuleData.AmmoCount) + (rocketData.LaunchDelay * rocketModuleData.AmmoCount));
                     Fire();
                 }
             }
@@ -60,8 +60,8 @@ namespace Assets.Game.Scripts.Modules
         {
             GameObject rocket = PoolSignals.Instance.onGetItemFromPool?.Invoke(ItemType.Rocket);
             rocket.transform.position = bulletPoint.position;
-            AbsAmmunition ammunition = rocket.GetComponent<AbsAmmunition>();
-            ammunition.Initialize(moduleData);
+            AbsAmmunitionHandler ammunition = rocket.GetComponent<AbsAmmunitionHandler>();
+            ammunition.Initialize(rocketData);
             ammunition.Launch();
         }
 
@@ -70,13 +70,13 @@ namespace Assets.Game.Scripts.Modules
             switch (data.UpgradeType)
             {
                 case UpgradeType.FireRate:
-                    fireRate *= data.Multiplier;
+                    rocketModuleData.FireRate += rocketModuleData.FireRate * data.Multiplier;
                     break;
                 case UpgradeType.ExtraAmmo:
-                    ammoCount += (byte)Mathf.RoundToInt(data.Value);
+                    rocketModuleData.AmmoCount += (byte)Mathf.RoundToInt(data.Value);
                     break;
                 case UpgradeType.ExplosionRadius:
-                    explosionRadius += data.Value;
+                    rocketData.ExplosionRadius += data.Value;
                     break;
             }
         }

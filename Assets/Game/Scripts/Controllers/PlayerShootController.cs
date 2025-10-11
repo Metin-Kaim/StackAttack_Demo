@@ -12,7 +12,7 @@ namespace Assets.Game.Scripts.Controllers
 
         private bool _isTouchReleased;
 
-        private readonly List<AbsAmmunitionModule> _activeModules = new();
+        private List<AbsAmmunitionModule> _activeModules = new();
         private Dictionary<ModuleType, AbsAmmunitionModule> allModules;
 
         private void OnEnable()
@@ -82,10 +82,10 @@ namespace Assets.Game.Scripts.Controllers
             module.Initialize(bulletPoint);
         }
 
-        //public void RemoveModule(AbsAmmunitionModule module)
+        //public void RemoveModule(AbsAmmunitionModule data)
         //{
-        //    module.Dispose();
-        //    _activeModules.Remove(module);
+        //    data.Dispose();
+        //    _activeModules.Remove(data);
         //}
     }
 }

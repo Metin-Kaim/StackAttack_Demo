@@ -1,22 +1,21 @@
-﻿using System;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Assets.Game.Scripts.Signals
 {
-    public class PlayerSignals : MonoBehaviour
+    public class CanvasSignals : MonoBehaviour
     {
-        public static PlayerSignals Instance;
+        public static CanvasSignals Instance;
 
-        public Func<float> onGetPlayerPositionY;
-        public Func<Vector2> onGetPlayerPosition;
-        public UnityAction<ModuleType> onAddModule;
+        public UnityAction onShowUpgradeCards;
 
         private void Awake()
         {
             if (Instance != null && Instance != this)
             {
-                Destroy(Instance);
+                Destroy(this);
+                return;
             }
             Instance = this;
             DontDestroyOnLoad(gameObject);

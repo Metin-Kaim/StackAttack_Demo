@@ -10,4 +10,8 @@
     Hexagon = 30,
     HexagonWithText,
 
+
+    //UI: 60
+    Card = 60,
+
 }

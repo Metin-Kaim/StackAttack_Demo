@@ -1,5 +1,6 @@
 public enum UpgradeType : byte
 {
+    Unlock,
     FireRate,
     ExtraAmmo,
     Piercing,

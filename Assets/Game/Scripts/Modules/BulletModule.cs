@@ -9,7 +9,6 @@ namespace Assets.Game.Scripts.Modules
 {
     public class BulletModule : AbsAmmunitionModule
     {
-        private bool piercing;
         private AbsBulletState currentBulletState;
 
         SingleBulletState singleBulletState;
@@ -17,19 +16,24 @@ namespace Assets.Game.Scripts.Modules
 
         Dictionary<byte, AbsBulletState> bulletStates;
 
+        private BulletModuleData bulletModuleData;
+        private BulletData bulletData;
+
         public override ModuleType ModuleType => ModuleType.Bullet;
 
-        public BulletModule(AbsModuleData info) : base(info)
+        public BulletData BulletData => bulletData; 
+
+        public BulletModule(AbsModuleData moduleData) : base(moduleData)
         {
-            base.moduleData = moduleData;
-            piercing = (info as BulletModuleData).Piercing;
+            bulletModuleData = (moduleData as BulletModuleData);
+            bulletData = (moduleData as BulletModuleData).BulletData;
         }
 
         public override void Tick()
         {
             fireTimer += Time.deltaTime;
 
-            if (fireTimer >= 1f / fireRate)
+            if (fireTimer >= 1f / bulletModuleData.FireRate)
             {
                 fireTimer = 0;
                 Fire();
@@ -46,14 +50,14 @@ namespace Assets.Game.Scripts.Modules
             switch (data.UpgradeType)
             {
                 case UpgradeType.FireRate:
-                    fireRate *= data.Multiplier;
+                    bulletModuleData.FireRate += bulletModuleData.FireRate * data.Multiplier;
                     break;
                 case UpgradeType.ExtraAmmo:
-                    ammoCount += (byte)Mathf.RoundToInt(data.Value);
-                    UpgradeBulletState(ammoCount);
+                    bulletModuleData.AmmoCount += (byte)Mathf.RoundToInt(data.Value);
+                    UpgradeBulletState(bulletModuleData.AmmoCount);
                     break;
                 case UpgradeType.Piercing:
-                    piercing = true;
+                    bulletData.Piercing = true;
                     break;
             }
         }
@@ -62,8 +66,8 @@ namespace Assets.Game.Scripts.Modules
         {
             base.Initialize(bulletPoint);
 
-            singleBulletState = new SingleBulletState(bulletPoint, moduleData);
-            doubleBulletState = new DoubleBulletState(bulletPoint, moduleData);
+            singleBulletState = new SingleBulletState(bulletPoint, this);
+            doubleBulletState = new DoubleBulletState(bulletPoint, this);
 
             bulletStates = new()
             {

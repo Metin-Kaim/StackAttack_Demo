@@ -10,6 +10,12 @@ namespace Assets.Game.Scripts.Managers
         private void OnEnable()
         {
             PlayerSignals.Instance.onGetPlayerPositionY += OnGetPlayerPositionY;
+            PlayerSignals.Instance.onGetPlayerPosition += OnGetPlayerPosition;
+        }
+
+        private Vector2 OnGetPlayerPosition()
+        {
+            return transform.position;
         }
 
         private float OnGetPlayerPositionY()
@@ -20,6 +26,7 @@ namespace Assets.Game.Scripts.Managers
         private void OnDisable()
         {
             PlayerSignals.Instance.onGetPlayerPositionY -= OnGetPlayerPositionY;
+            PlayerSignals.Instance.onGetPlayerPosition -= OnGetPlayerPosition;
         }
     }
 }

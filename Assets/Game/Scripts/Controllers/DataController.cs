@@ -12,6 +12,11 @@ namespace Assets.Game.Scripts.Controllers
         [SerializeField] ColorDatasSO colorDatasSO;
         [SerializeField] AmmunitionModuleDatasSO ammunitionModuleDatasSO;
 
+        private void Awake()
+        {
+            ammunitionModuleDatasSO = Instantiate(ammunitionModuleDatasSO);
+        }
+
         private void OnEnable()
         {
             DataSignals.Instance.onGetColor += OnGetColor;

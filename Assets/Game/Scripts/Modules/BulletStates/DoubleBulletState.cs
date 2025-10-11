@@ -1,4 +1,5 @@
-﻿using Assets.Game.Scripts.Datas;
+﻿using Assets.Game.Scripts.Abstract;
+using Assets.Game.Scripts.Datas;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Modules.BulletStates
@@ -10,7 +11,7 @@ namespace Assets.Game.Scripts.Modules.BulletStates
 
         Vector3 _bulletPositionOffset = Vector3.right * 0.25f;
 
-        public DoubleBulletState(Transform centerBulletPoint, AbsModuleData moduleData) : base(centerBulletPoint, moduleData)
+        public DoubleBulletState(Transform centerBuletPoint, AbsAmmunitionModule module) : base(centerBuletPoint, module)
         { }
 
         public override void Tick()
