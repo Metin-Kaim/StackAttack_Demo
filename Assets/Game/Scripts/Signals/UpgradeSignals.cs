@@ -1,5 +1,4 @@
 ﻿using Assets.Game.Scripts.Datas;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -19,7 +18,6 @@ namespace Assets.Game.Scripts.Signals
             }
 
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
     }
 }

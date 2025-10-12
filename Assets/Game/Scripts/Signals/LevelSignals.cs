@@ -17,7 +17,6 @@ namespace Assets.Game.Scripts.Signals
                 Destroy(Instance);
             }
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
     }
 }

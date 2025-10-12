@@ -10,13 +10,13 @@ namespace Assets.Game.Scripts.Managers
         public static GameManager Instance;
 
         public UnityAction onLevelCompleted;
+        public UnityAction onLevelFailed;
         public UnityAction onGameStarted;
         public Func<bool> onGetIsGameStarted;
-        public UnityAction onGameOver;
         public UnityAction<string> onLoadScene;
 
         private bool IsGameStarted;
-        private byte currentLevel;
+        private int currentLevel;
 
         private void Awake()
         {
@@ -41,6 +41,8 @@ namespace Assets.Game.Scripts.Managers
         public void OnLoadScene(string sceneName)
         {
             SceneManager.LoadScene(sceneName);
+            IsGameStarted = false;
+            Time.timeScale = 1;
         }
 
         private bool OnGetIsGameStarted()
@@ -65,6 +67,11 @@ namespace Assets.Game.Scripts.Managers
             onGameStarted -= OnGameStarted;
             onGetIsGameStarted -= OnGetIsGameStarted;
             onLoadScene -= OnLoadScene;
+        }
+
+        private void Start()
+        {
+            currentLevel = PlayerPrefs.GetInt("Level", 1);
         }
     }
 }

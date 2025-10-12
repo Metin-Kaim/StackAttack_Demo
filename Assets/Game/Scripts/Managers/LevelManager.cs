@@ -13,6 +13,8 @@ namespace Assets.Game.Scripts.Managers
             GameObject currentLevelPrefab = Resources.Load<GameObject>("Levels/Level_" + PlayerPrefs.GetInt("Level", 1));
 
             currentLevel = Instantiate(currentLevelPrefab, Vector3.zero, Quaternion.identity).GetComponent<LevelHandler>();
+
+            currentLevel.gameObject.SetActive(false);
         }
 
         private void OnEnable()
@@ -28,6 +30,11 @@ namespace Assets.Game.Scripts.Managers
         private void OnDisable()
         {
             LevelSignals.Instance.onGetCurrentLevel -= OnGetCurrentLevel;
+        }
+
+        private void Start()
+        {
+            currentLevel.gameObject.SetActive(true);
         }
     }
 }

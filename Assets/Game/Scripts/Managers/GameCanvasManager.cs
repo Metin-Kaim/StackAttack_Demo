@@ -10,13 +10,35 @@ namespace Assets.Game.Scripts.Managers
         [SerializeField] private CardController cardController;
         [SerializeField] private UpgradeProgressBarHandler progressBarHandler;
         [SerializeField] private GameObject startPanel;
+        [SerializeField] private GameObject endPanel;
+        [SerializeField] private GameObject winPanel;
+        [SerializeField] private GameObject failPanel;
+
         private void OnEnable()
         {
             CanvasSignals.Instance.onShowUpgradeCards += OnShowUpgradeCards;
             StackSignals.Instance.onStackDestroyed += progressBarHandler.IncreaseProgress;
             GameManager.Instance.onGameStarted += OnGameStart;
+            GameManager.Instance.onLevelCompleted += OnGameWin;
+            GameManager.Instance.onLevelFailed += OnGameFail;
         }
 
+        private void OnGameFail()
+        {
+            OnGameEnd();
+            failPanel.SetActive(true);
+        }
+
+        private void OnGameWin()
+        {
+            OnGameEnd();
+            winPanel.SetActive(true);
+        }
+        private void OnGameEnd()
+        {
+            Time.timeScale = 0;
+            endPanel.SetActive(true);
+        }
         private void OnGameStart()
         {
             startPanel.SetActive(false);
@@ -33,6 +55,8 @@ namespace Assets.Game.Scripts.Managers
             CanvasSignals.Instance.onShowUpgradeCards -= OnShowUpgradeCards;
             StackSignals.Instance.onStackDestroyed -= progressBarHandler.IncreaseProgress;
             GameManager.Instance.onGameStarted -= OnGameStart;
+            GameManager.Instance.onLevelCompleted -= OnGameWin;
+            GameManager.Instance.onLevelFailed -= OnGameFail;
         }
     }
 }
