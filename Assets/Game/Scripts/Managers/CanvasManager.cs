@@ -9,7 +9,7 @@ namespace Assets.Game.Scripts.Managers
     public class CanvasManager : MonoBehaviour
     {
         [SerializeField] private CardController cardController;
-        [SerializeField] private ProgressBarHandler progressBarHandler;
+        [SerializeField] private UpgradeProgressBarHandler progressBarHandler;
 
         private void OnEnable()
         {

@@ -39,7 +39,7 @@ MonoBehaviour:
         ExplosionRadius: 0.6
         LaunchDelay: 0.25
         amplitude: 5
-        frequency: 0.4
+        frequency: 1
         rotationSmoothness: 30
     BoomerangModuleData:
       FireRate: 0.3

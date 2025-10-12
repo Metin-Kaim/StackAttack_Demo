@@ -4,11 +4,11 @@ using UnityEngine.UI;
 
 namespace Assets.Game.Scripts.Handlers
 {
-    public class ProgressBarHandler : MonoBehaviour
+    public class UpgradeProgressBarHandler : MonoBehaviour
     {
         [SerializeField] private Image progressBar;
 
-        [SerializeField] private float fillSpeed = 0.05f;
+        [SerializeField] private float fillSpeed;
 
         public void IncreaseProgress()
         {
@@ -17,6 +17,10 @@ namespace Assets.Game.Scripts.Handlers
             if (progressBar.fillAmount >= 1)
             {
                 progressBar.fillAmount = 0;
+                fillSpeed -= 0.05f;
+                if (fillSpeed < 0.1f)
+                    fillSpeed = 0.1f;
+
                 CanvasSignals.Instance.onShowUpgradeCards?.Invoke();
             }
         }
