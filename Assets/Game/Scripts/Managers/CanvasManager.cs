@@ -2,7 +2,6 @@
 using Assets.Game.Scripts.Handlers;
 using Assets.Game.Scripts.Signals;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Assets.Game.Scripts.Managers
 {
@@ -10,11 +9,17 @@ namespace Assets.Game.Scripts.Managers
     {
         [SerializeField] private CardController cardController;
         [SerializeField] private UpgradeProgressBarHandler progressBarHandler;
-
+        [SerializeField] private GameObject startPanel;
         private void OnEnable()
         {
             CanvasSignals.Instance.onShowUpgradeCards += OnShowUpgradeCards;
             StackSignals.Instance.onStackDestroyed += progressBarHandler.IncreaseProgress;
+            GameSignals.Instance.onGameStarted += OnGameStart;
+        }
+
+        private void OnGameStart()
+        {
+            startPanel.SetActive(false);
         }
 
         private void OnShowUpgradeCards()
@@ -27,6 +32,7 @@ namespace Assets.Game.Scripts.Managers
         {
             CanvasSignals.Instance.onShowUpgradeCards -= OnShowUpgradeCards;
             StackSignals.Instance.onStackDestroyed -= progressBarHandler.IncreaseProgress;
+            GameSignals.Instance.onGameStarted -= OnGameStart;
         }
     }
 }

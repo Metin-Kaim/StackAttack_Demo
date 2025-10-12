@@ -8,6 +8,7 @@ namespace Assets.Game.Scripts.Controllers
     {
         private Vector2 _lastMousePosition;
         private bool _isTouching;
+        private bool _isFirstTouch = true;
 
         public Vector2 MouseDelta { get; private set; }
         public bool IsTouching => _isTouching;
@@ -32,12 +33,17 @@ namespace Assets.Game.Scripts.Controllers
                 MouseDelta = Vector2.zero;
             }
 
+            if (_isFirstTouch && _isTouching)
+            {
+                _isFirstTouch = false;
+                GameSignals.Instance.onGameStarted?.Invoke();
+            }
 
             if (Input.GetKeyDown(KeyCode.R))
             {
                 CanvasSignals.Instance.onShowUpgradeCards?.Invoke();
             }
-            
+
         }
     }
 }

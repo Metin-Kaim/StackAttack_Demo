@@ -11,6 +11,11 @@ namespace Assets.Game.Scripts.Controllers
 
         private void Update()
         {
+            if (!GameSignals.Instance.onGetIsGameStarted.Invoke())
+            {
+                return;
+            }
+
             float mouseDeltaX = InputSignals.Instance.onGetMouseDeltaX.Invoke();
 
             Vector3 movement = moveSpeed * Time.deltaTime * new Vector3(mouseDeltaX, forwardSpeed, 0f);

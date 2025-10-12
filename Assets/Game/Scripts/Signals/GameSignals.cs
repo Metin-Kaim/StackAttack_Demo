@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,6 +10,8 @@ namespace Assets.Game.Scripts.Signals
         public static GameSignals Instance;
 
         public UnityAction onLevelCompleted;
+        public UnityAction onGameStarted;
+        public Func<bool> onGetIsGameStarted;
 
         private void Awake()
         {
