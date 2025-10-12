@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
 namespace Assets.Game.Scripts.Signals
 {
-    public class CanvasSignals : MonoBehaviour
+    public class StackSignals : MonoBehaviour
     {
-        public static CanvasSignals Instance;
+        public static StackSignals Instance;
 
-        public UnityAction onShowUpgradeCards;
+        public UnityAction onStackDestroyed;
 
         private void Awake()
         {

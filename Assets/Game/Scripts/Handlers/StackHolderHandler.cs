@@ -71,6 +71,7 @@ namespace Assets.Game.Scripts.Handlers
             //print(health);
             if (health <= 0)
             {
+                StackSignals.Instance.onStackDestroyed?.Invoke();
                 Destroy(gameObject);
                 return;
             }

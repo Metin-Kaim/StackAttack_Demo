@@ -38,11 +38,6 @@ public class PoolManager : MonoBehaviour
 
     private GameObject Get(ItemType type)
     {
-        if (type == ItemType.Boomerang)
-        {
-            Debug.Log("Get Boomerang from Pool");
-        }
-
         if (!poolDictionary.TryGetValue(type, out var pool))
         {
             Debug.LogWarning($"No pool found for {type}");
