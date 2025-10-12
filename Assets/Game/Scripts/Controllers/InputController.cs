@@ -1,4 +1,5 @@
 using Assets.Game.Scripts.Datas;
+using Assets.Game.Scripts.Managers;
 using Assets.Game.Scripts.Signals;
 using UnityEngine;
 
@@ -36,7 +37,7 @@ namespace Assets.Game.Scripts.Controllers
             if (_isFirstTouch && _isTouching)
             {
                 _isFirstTouch = false;
-                GameSignals.Instance.onGameStarted?.Invoke();
+                GameManager.Instance.onGameStarted?.Invoke();
             }
 
             if (Input.GetKeyDown(KeyCode.R))

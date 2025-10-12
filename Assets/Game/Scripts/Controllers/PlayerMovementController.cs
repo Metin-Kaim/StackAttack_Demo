@@ -1,3 +1,4 @@
+using Assets.Game.Scripts.Managers;
 using Assets.Game.Scripts.Signals;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ namespace Assets.Game.Scripts.Controllers
 
         private void Update()
         {
-            if (!GameSignals.Instance.onGetIsGameStarted.Invoke())
+            if (!GameManager.Instance.onGetIsGameStarted.Invoke())
             {
                 return;
             }

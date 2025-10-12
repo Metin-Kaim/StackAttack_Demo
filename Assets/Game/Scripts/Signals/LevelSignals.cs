@@ -1,20 +1,20 @@
-﻿using UnityEngine;
-using UnityEngine.Events;
+﻿using Assets.Game.Scripts.Handlers;
+using System;
+using UnityEngine;
 
 namespace Assets.Game.Scripts.Signals
 {
-    public class CanvasSignals : MonoBehaviour
+    public class LevelSignals : MonoBehaviour
     {
-        public static CanvasSignals Instance;
+        public static LevelSignals Instance;
 
-        public UnityAction onShowUpgradeCards;
+        public Func<LevelHandler> onGetCurrentLevel;
 
         private void Awake()
         {
             if (Instance != null && Instance != this)
             {
-                Destroy(this);
-                return;
+                Destroy(Instance);
             }
             Instance = this;
             DontDestroyOnLoad(gameObject);

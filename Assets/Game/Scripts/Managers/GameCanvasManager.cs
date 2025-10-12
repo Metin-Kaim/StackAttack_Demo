@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.Game.Scripts.Managers
 {
-    public class CanvasManager : MonoBehaviour
+    public class GameCanvasManager : MonoBehaviour
     {
         [SerializeField] private CardController cardController;
         [SerializeField] private UpgradeProgressBarHandler progressBarHandler;
@@ -14,7 +14,7 @@ namespace Assets.Game.Scripts.Managers
         {
             CanvasSignals.Instance.onShowUpgradeCards += OnShowUpgradeCards;
             StackSignals.Instance.onStackDestroyed += progressBarHandler.IncreaseProgress;
-            GameSignals.Instance.onGameStarted += OnGameStart;
+            GameManager.Instance.onGameStarted += OnGameStart;
         }
 
         private void OnGameStart()
@@ -32,7 +32,7 @@ namespace Assets.Game.Scripts.Managers
         {
             CanvasSignals.Instance.onShowUpgradeCards -= OnShowUpgradeCards;
             StackSignals.Instance.onStackDestroyed -= progressBarHandler.IncreaseProgress;
-            GameSignals.Instance.onGameStarted -= OnGameStart;
+            GameManager.Instance.onGameStarted -= OnGameStart;
         }
     }
 }
