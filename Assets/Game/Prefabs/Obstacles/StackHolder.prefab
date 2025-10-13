@@ -48,7 +48,6 @@ MonoBehaviour:
   Config:
     StackSize: 0
     SizeMultiplier: 0
-    StackText: {fileID: 0}
     ColorType: 0
   hexagons: []
   health: 0

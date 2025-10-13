@@ -11,6 +11,7 @@ namespace Assets.Game.Scripts.Signals
         public Func<float> onGetPlayerPositionY;
         public Func<Vector2> onGetPlayerPosition;
         public UnityAction<ModuleType> onAddModule;
+        public UnityAction onDecreaseHeart;
 
         private void Awake()
         {

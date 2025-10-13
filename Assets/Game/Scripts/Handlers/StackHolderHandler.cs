@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using static UnityEngine.Rendering.STP;
 
 namespace Assets.Game.Scripts.Handlers
 {
@@ -17,9 +16,15 @@ namespace Assets.Game.Scripts.Handlers
         [SerializeField] private List<GameObject> hexagons;
         [SerializeField] private byte health;
 
+        private BoxCollider2D _collider;
         private TextMeshPro _healthText;
         private Vector3 _initScale;
-        private byte MaxHealth;
+        private byte _maxHealth;
+
+        private void Awake()
+        {
+            _collider = GetComponent<BoxCollider2D>();
+        }
 
         private void Start()
         {
@@ -38,8 +43,10 @@ namespace Assets.Game.Scripts.Handlers
                 hexagons.Add(hexagon);
             }
             GameObject hexagonWText = PoolSignals.Instance.onGetItemFromPool.Invoke(ItemType.HexagonWithText);
+
             hexagonWText.transform.SetParent(transform);
             hexagonWText.transform.localPosition = .1f * hexagons.Count * Vector3.up;
+
             SpriteRenderer sprite2 = hexagonWText.GetComponent<SpriteRenderer>();
             sprite2.color = color;
             sprite2.sortingOrder = hexagons.Count;
@@ -49,7 +56,7 @@ namespace Assets.Game.Scripts.Handlers
             _healthText.sortingOrder = hexagons.Count;
 
             health = (byte)(Config.StackSize * Config.SizeMultiplier);
-            MaxHealth = health;
+            _maxHealth = health;
 
             UpdateHealthText();
         }
@@ -64,7 +71,7 @@ namespace Assets.Game.Scripts.Handlers
         {
             health -= damage;
 
-            if (health > MaxHealth)
+            if (health > _maxHealth)
             {
                 health = 0;
             }
@@ -89,6 +96,8 @@ namespace Assets.Game.Scripts.Handlers
                     hexagons.Remove(hexa);
                     Destroy(hexa);
                     transform.position += Vector3.down * .1f;
+                    _collider.offset += Vector2.up * .1f;
+
                 }
                 transform.DOComplete();
                 transform.DOScale(_initScale + Vector3.one * 0.1f, 0.2f).SetLoops(2, LoopType.Yoyo).SetLink(gameObject, LinkBehaviour.KillOnDestroy);

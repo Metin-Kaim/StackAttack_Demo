@@ -155,6 +155,10 @@ MonoBehaviour:
   borderOfMovement: {x: -2.4, y: 2.4}
   moveSpeed: 2
   forwardSpeed: 0.6
+  triggerSize: {x: 0.5, y: 0.5, z: 0}
+  hitLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &6976755788448650695
 MonoBehaviour:
   m_ObjectHideFlags: 0
