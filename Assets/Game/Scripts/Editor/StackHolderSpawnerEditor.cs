@@ -1,13 +1,11 @@
 ﻿using UnityEditor;
 using UnityEngine;
 using Assets.Game.Scripts.Handlers;
-using Assets.Game.Scripts.Datas; // ColorType burada tanımlı olduğunu varsayıyoruz
 
 [CustomEditor(typeof(StackHolderSpawner))]
 public class StackHolderSpawnerEditor : Editor
 {
     // Rastgele config kontrolü için geçici alanlar
-    private bool randomizeConfig = false;
     private Vector2 boundsOfSize;
     private Vector2 boundsOfMultiplier;
 
@@ -18,16 +16,10 @@ public class StackHolderSpawnerEditor : Editor
         EditorGUILayout.LabelField("Random Config Options", EditorStyles.boldLabel);
 
         // Checkbox
-        randomizeConfig = EditorGUILayout.Toggle("Randomize Config", randomizeConfig);
-
-        // Eğer işaretliyse alt ayarları göster
-        if (randomizeConfig)
-        {
-            EditorGUI.indentLevel++;
-            boundsOfSize = EditorGUILayout.Vector2Field("Bounds Of Size", boundsOfSize);
-            boundsOfMultiplier = EditorGUILayout.Vector2Field("Bounds Of Multiplier", boundsOfMultiplier);
-            EditorGUI.indentLevel--;
-        }
+        EditorGUI.indentLevel++;
+        boundsOfSize = EditorGUILayout.Vector2Field("Bounds Of Size", boundsOfSize);
+        boundsOfMultiplier = EditorGUILayout.Vector2Field("Bounds Of Multiplier", boundsOfMultiplier);
+        EditorGUI.indentLevel--;
     }
 
     private void OnEnable() => SceneView.duringSceneGui += OnSceneGUI;
@@ -72,16 +64,13 @@ public class StackHolderSpawnerEditor : Editor
                 // Config atama
                 var config = spawner.Config;
 
-                if (randomizeConfig)
-                {
-                    // Min-Max aralığında rastgele count
-                    config.StackSize = (byte)Random.Range(boundsOfSize.x, boundsOfSize.y + 1);
-                    config.SizeMultiplier = (byte)Random.Range(boundsOfMultiplier.x, boundsOfMultiplier.y + 1);
+                // Min-Max aralığında rastgele count
+                config.StackSize = (byte)Random.Range(boundsOfSize.x, boundsOfSize.y + 1);
+                config.SizeMultiplier = (byte)Random.Range(boundsOfMultiplier.x, boundsOfMultiplier.y + 1);
 
-                    // Rastgele bir ColorType seç
-                    var colors = (ColorType[])System.Enum.GetValues(typeof(ColorType));
-                    config.ColorType = colors[Random.Range(0, colors.Length)];
-                }
+                // Rastgele bir ColorType seç
+                var colors = (ColorType[])System.Enum.GetValues(typeof(ColorType));
+                config.ColorType = colors[Random.Range(0, colors.Length)];
 
                 obj.Config = config;
 

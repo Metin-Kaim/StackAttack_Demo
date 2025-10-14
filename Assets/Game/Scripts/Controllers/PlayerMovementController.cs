@@ -42,13 +42,10 @@ namespace Assets.Game.Scripts.Controllers
         {
             Collider2D hit = Physics2D.OverlapBox(transform.position, triggerSize, 0, hitLayer);
 
-            print("Checking Hit");
             if (hit == null) return;
 
-            print(" Hit something: " + hit.name);
             if (hit.TryGetComponent(out StackHolderHandler stack))
             {
-                print("Hit " + stack.name);
                 if (_hitTargets.Add(stack))
                 {
                     Hit(stack);
